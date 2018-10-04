@@ -1,0 +1,33 @@
+# 请求省份页面
+http://www.dam.com.cn/damView/getSdz.jsp?sfid=20
+# 提取省份
+response.xpath('//td[@height="30" and @class="a5" and @align="center"]/text()').extract()
+
+# 提取水电站类型
+
+response.xpath('//tr/td/div[@style]/text()').extract()
+
+通过列表长度来知道有几类水电站
+# 提取水电站信息
+## 水电站名字
+有几类，tr[1]表示选择第一类所有水电站的名字
+response.xpath('//tr[1]/td[@style]/div/a[@href]/text()').extract()
+## 水电站访问id
+response.xpath('//tr[1]/td[@style]/div/a[@href]/@href').re(r'\d\d\d\d')
+
+## 水电站描述页面
+
+# 请求描述页面
+    http://www.dam.com.cn/damView/view.jsp?id=1022
+# 检查描述页是否空白
+response.xpath('//tr/td[@class="nr3"]/p').extract()
+# 提取描述段落
+response.xpath('//tr/td[@class="nr3"]').extract()
+# 数据容器结构
+{'Province':None,
+'DamList':{'TypeA':[{'DamName':,
+                     'DamDescription':,
+                     'DamLink':}],
+           'TypeB':[],
+           'TypeC':[]}
+}
