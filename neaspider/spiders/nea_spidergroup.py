@@ -1,9 +1,7 @@
 import re
 import scrapy
-from neaspider.items import ProvincepageItem, DampageItem
-import time
-import pprint
-import json
+from neaspider.items import DampageItem
+from bs4 import BeautifulSoup as bsp
 
 
 class ProvincepageSpider(scrapy.Spider):
@@ -71,7 +69,10 @@ class ProvincepageSpider(scrapy.Spider):
             print('dam description is null,skip')
             damItem['DamDescription'] = 'No description'
         else:
-            damItem['DamDescription'] = response.xpath('//tr/td[@class="nr3"]').extract()[0]
+            rawDescrip = response.xpath('//tr/td[@class="nr3"]').extract()[0]
+            soup = bsp(rawDescrip)
+            descripText = soup.get_text()
+            damItem['DamDescription'] = descripText
 
         return damItem
 
